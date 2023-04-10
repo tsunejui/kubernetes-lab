@@ -1,0 +1,33 @@
+@startuml metrics-components-diagram
+
+package "Worker Node" {
+    package "Kubelet"{
+        agent "Kubelet metrics" as km
+        agent "Resource metrics" as rm
+        agent "Summary metrics" as sm
+        agent "cAdvisor metrics" as cm
+    }
+    agent "Node Exporter" as ne
+}
+
+package "Master Node" {
+    agent "API Server" as api
+    agent "Scheduler" as scheduler
+}
+
+agent "Metrics Server" as ms
+agent "kubectl" as kc
+agent "prometheus" as pt
+
+cm --> sm : collect
+sm --> rm : collect
+ms --> cm : ":10250/stats"
+api --> ms : access
+
+kc --> api : access
+pt --> api : collect\n/metrics
+pt --> ne : collect
+scheduler --> api : query
+
+
+@enduml
