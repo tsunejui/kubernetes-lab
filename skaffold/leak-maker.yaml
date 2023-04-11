@@ -1,0 +1,21 @@
+# build:
+#    skaffold build -f skaffold/leak-maker.yaml
+apiVersion: skaffold/v2alpha3
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: localhost:12345/leak-maker
+      context: .
+      docker:
+        dockerfile: Dockerfile
+        buildArgs: 
+          EXAMPLE_PROGRAM: cmd/leak-maker
+
+deploy:
+  kubectl:
+    manifests:
+      - manifests/leak-maker/deployment.yaml
+      - manifests/leak-maker/route.yaml
+      - manifests/leak-maker/service.yaml

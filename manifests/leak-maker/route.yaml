@@ -1,0 +1,11 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: k3d
+spec:
+  routes:
+    - match: Host(`leak-maker.k3d.lab`)
+      kind: Rule
+      services:
+        - name: leak-maker
+          port: 8080

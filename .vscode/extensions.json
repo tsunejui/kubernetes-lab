@@ -1,0 +1,10 @@
+{
+	"recommendations": [
+		"golang.go",
+		"humao.rest-client",
+		"cweijan.vscode-redis-client",
+    ],
+	"unwantedRecommendations": [
+
+	]
+}

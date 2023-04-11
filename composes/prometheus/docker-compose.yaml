@@ -1,0 +1,44 @@
+# usage:
+#    docker-compose -f composes/prometheus/docker-compose.yaml up
+version: '3.2'
+
+services: 
+  grafana:
+    image: grafana/grafana:9.3.6
+    depends_on:
+      - prometheus
+      - lab-proxy-nginx
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data/grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/:/etc/grafana/provisioning/
+    networks:
+      - k8s-lab
+
+  prometheus:
+    image: prom/prometheus:v2.42.0
+    volumes:
+      - ./data/prometheus-data:/prometheus
+      - ./monitoring/prometheus:/etc/prometheus:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - 9090:9090
+    networks:
+      - k8s-lab
+
+  lab-proxy-nginx:
+    image: nginx:1.23.3
+    ports:
+      - 8080:8080
+    volumes:
+      - ./conf/k3d.conf:/etc/nginx/conf.d/k3d.conf
+    networks:
+      - k8s-lab
+
+networks:
+  k8s-lab:
+    external:
+      name: k8s-lab

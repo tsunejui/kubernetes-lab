@@ -1,0 +1,22 @@
+# https://docs.docker.com/registry/spec/api/
+@host = http://localhost:12345
+
+## get all images
+GET {{ host }}/v2/_catalog
+Content-Type: application/json
+
+{}
+
+###
+## get image tags
+GET {{ host }}/v2/leak-maker/tags/list
+Content-Type: application/json
+
+{}
+
+###
+## delete an image
+DELETE /v2/nginx/manifests/1.18
+Content-Type: application/json
+
+{}
