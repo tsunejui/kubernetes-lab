@@ -19,3 +19,10 @@ spec:
         image: k3d-lab-registry.localhost:12345/leak-maker:latest
         ports:
         - containerPort: 8080
+        resources:
+          limits:
+            cpu: 20m
+            memory: 10Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi

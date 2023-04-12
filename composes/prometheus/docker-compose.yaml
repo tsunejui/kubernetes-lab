@@ -33,6 +33,7 @@ services:
     image: nginx:1.23.3
     ports:
       - 8080:8080
+      - 8081:8081
     volumes:
       - ./conf/k3d.conf:/etc/nginx/conf.d/k3d.conf
     networks:

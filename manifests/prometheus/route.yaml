@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: k3d-prometheus
+spec:
+  routes:
+    - match: Host(`prometheus.k3d.lab`)
+      kind: Rule
+      services:
+        - name: prometheus-svc
+          port: 9090
+          namespace: monitoring

@@ -18,7 +18,7 @@ const (
 )
 
 func main() {
-	memoryTicker := time.NewTicker(time.Millisecond * 5)
+	memoryTicker := time.NewTicker(time.Second * 5)
 	leak := make(map[int][]byte)
 	i := 0
 
@@ -29,7 +29,7 @@ func main() {
 		}
 	}()
 
-	fileTicker := time.NewTicker(time.Millisecond * 5)
+	fileTicker := time.NewTicker(time.Second * 1)
 	go func() {
 		f, err := os.Create(FILE_NAME)
 		if err != nil {
